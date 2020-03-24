@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: 'v2-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
+          key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
       - run:
           name: "Install Function Dependencies"
           command: |
@@ -19,7 +19,7 @@ jobs:
       - save_cache:
           paths:
             - "~/the-love-for-nature/functions/node_modules"
-          key: 'v2-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
+          key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
       - persist_to_workspace:
           root: ~/the-love-for-nature
           paths:
