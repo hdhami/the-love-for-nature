@@ -23,12 +23,8 @@ jobs:
           paths:
             - "~/the-love-for-nature/functions/node_modules"
           key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
-      - run:
-          name: "Create temp workspace"
-          command: |
-            mkdir -p temp/workspace
       - persist_to_workspace:
-          root: ~/the-love-for-nature/temp/workspace
+          root: ~/the-love-for-nature
           paths:
             - experience
             - functions
@@ -40,7 +36,7 @@ jobs:
       - image: "circleci/node:lts"
     steps:
       - attach_workspace:
-          at: ~/the-love-for-nature/temp/workspace
+          at: ~/the-love-for-nature
       - firebase-deploy/deploy:
           token: $FIREBASE_DEPLOY_TOKEN
 
