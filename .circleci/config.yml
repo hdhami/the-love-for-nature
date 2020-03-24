@@ -1,9 +1,6 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 version: 2.1
 # Use a package of configuration called an orb.
-orbs:
-  # Declare a dependency on the firebase-deploy orb
-  firebase-deploy: azdevs/firebase-deploy@1.0.0
 # Create jobs for workflows
 jobs:
   build:
@@ -37,8 +34,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/the-love-for-nature
-      - firebase-deploy/deploy:
-          token: $FIREBASE_DEPLOY_TOKEN
+      - run:
+          name: "Firebase Deploy"
+          command: |
+            firebase deploy --token=$FIREBASE_DEPLOY_TOKEN -P default
 
 # Orchestrate or schedule a set of jobs
 workflows:
