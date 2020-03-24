@@ -6,7 +6,7 @@
     "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run lint"]
   },
   "hosting": {
-    "site": "the-love-for-prakriti",
+    "site": "prakriti-prem",
     "public": "experience",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
