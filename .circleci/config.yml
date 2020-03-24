@@ -23,6 +23,10 @@ jobs:
           paths:
             - "~/the-love-for-nature/functions/node_modules"
           key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
+      - run:
+          name: "Create temp workspace"
+          command: |
+            mkdir -p temp/workspace
       - persist_to_workspace:
           root: ~/the-love-for-nature/temp/workspace
           paths:
