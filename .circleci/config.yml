@@ -44,7 +44,7 @@ jobs:
           command: |
             firebase deploy --token $FIREBASE_TOKEN -P $FIREBASE_PID
 
-# Orchestrate or schedule a set of jobs
+# Orchestrate or Schedule a set of jobs
 workflows:
   build-and-deploy:
     jobs:
