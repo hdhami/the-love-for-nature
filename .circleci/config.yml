@@ -16,7 +16,6 @@ jobs:
           command: |
             cd functions
             npm install
-            sudo npm install -g firebase-tools
       - save_cache:
           paths:
             - "~/the-love-for-nature/functions/node_modules"
@@ -35,6 +34,10 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/the-love-for-nature
+      - run:
+          name: "Install Firebase SDK"
+          command: |
+            sudo npm install -g firebase-tools
       - run:
           name: "Firebase Deploy"
           command: |
