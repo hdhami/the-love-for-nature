@@ -41,6 +41,7 @@ jobs:
       - run:
           name: "Firebase Deploy"
           command: |
+            ls
             firebase deploy --token=$FIREBASE_DEPLOY_TOKEN -P default
 
 # Orchestrate or schedule a set of jobs
