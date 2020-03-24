@@ -2,12 +2,49 @@
 version: 2.1
 # Use a package of configuration called an orb.
 orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
+  # Declare a dependency on the firebase-deploy orb
+  firebase-deploy: azdevs/firebase-deploy@1.0.0
+# Create jobs for workflows
+jobs:
+  build:
+    working_directory: ~/the-love-for-nature
+    docker:
+      - image: "circleci/node:lts"
+    steps:
+      - checkout
+      - restore_cache:
+          key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
+      - run:
+          name: "Install Function Dependencies"
+          command: |
+            cd functions
+            npm install
+      - save_cache:
+          paths:
+            - "~/the-love-for-nature/functions/node_modules"
+          key: 'v1-package-{{ checksum "~/the-love-for-nature/functions/package.json" }}'
+      - persist_to_workspace:
+          root: /temp/workspace
+          paths:
+            - experience
+            - functions
+            - .firebaserc
+            - firebase.json
+            - datbaserules.json
+  deploy:
+    docker:
+      - image: "circleci/node:lts"
+    steps:
+      - attach_workspace:
+          at: /temp/workspace
+      - firebase-deploy/deploy:
+          token: $FIREBASE_DEPLOY_TOKEN
+
 # Orchestrate or schedule a set of jobs
 workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
+  build-and-deploy:
     jobs:
-      - welcome/run
+      - build
+      - deploy:
+          requires:
+            - build
